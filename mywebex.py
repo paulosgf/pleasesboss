@@ -1,16 +1,24 @@
 from flask import Flask, jsonify
 import requests
+import os
+from dotenv import load_dotenv
 
 # Cria a aplicação Flask
 app = Flask(__name__)
 
+load_dotenv()
+CLIENT_ID = os.environ.get("WEBEX_CLIENT_ID")
+CLIENT_SECRET = os.environ.get("WEBEX_CLIENT_SECRET")
+WEBEX_REDIRECT_URL = "https://paulosgf.pythonanywhere.com"
+
+
 @app.route('/')
 def oauth_client_credentials():
     # Informações da sua aplicação
-    client_id = "C94798424f9b59222d253d17d199b060e06c69406157cd8c284afc71e099316f4"
-    client_secret = "d51319d89c2e28318e43d03485c4582b6d658bbbac90a8ef4e94f9033d903e2f"
+    client_id = CLIENT_ID
+    client_secret = CLIENT_SECRET
     access_url = "https://webexapis.com/v1/authorize"
-    redirect_uri = "https://paulosgf.pythonanywhere.com"
+    redirect_uri = WEBEX_REDIRECT_URL
     scopes = "spark:all"
     response_type = "code"
 
