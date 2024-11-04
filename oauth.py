@@ -13,7 +13,8 @@ load_dotenv()
 
 clientID = os.environ.get("WEBEX_CLIENT_ID")
 secretID = os.environ.get("WEBEX_CLIENT_SECRET")
-redirectURI = "https://6b452916-b836-4123-b50b-518d368ec608-00-3l3sguw8yrcx6.riker.replit.dev/oauth"
+#redirectURI = "https://6b452916-b836-4123-b50b-518d368ec608-00-3l3sguw8yrcx6.riker.replit.dev/oauth"
+redirectURI = "https://pleasesboss.onrender.com/oauth"
 
 
 @app.route("/")
