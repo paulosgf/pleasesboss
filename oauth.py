@@ -11,10 +11,13 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 load_dotenv()
 
+# Providers
+RENDERPROVIDER = "https://pleasesboss.onrender.com/oauth"
+REPLITPROVIDER = "https://6b452916-b836-4123-b50b-518d368ec608-00-3l3sguw8yrcx6.riker.replit.dev/oauth"
+
 clientID = os.environ.get("WEBEX_CLIENT_ID")
 secretID = os.environ.get("WEBEX_CLIENT_SECRET")
-#redirectURI = "https://6b452916-b836-4123-b50b-518d368ec608-00-3l3sguw8yrcx6.riker.replit.dev/oauth"
-redirectURI = "https://pleasesboss.onrender.com/oauth"
+redirectURI = RENDERPROVIDER
 
 
 @app.route("/")
@@ -162,6 +165,22 @@ def get_tokens_refresh():
     print("Refresh Token stored in session : ", session["refresh_token"])
     return
 
+def api_call():
+    """
+    Funcion Name : api_call
+    Description : This only get spaces using a valid token:
+    access token or refresh token
+    """
+    accessToken = session["oauth_token"]
+    url = "https://webexapis.com/v1/rooms"
+    headers = {
+        "accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + accessToken,
+    }
+    response = requests.get(url=url, headers=headers)
+    return response
+
 
 @app.route("/spaces", methods=["GET"])
 def spaces():
@@ -191,18 +210,6 @@ def spaces():
         spaces.append(r[i]["title"])
 
     return render_template("spaces.html", spaces=spaces)
-
-
-def api_call():
-    accessToken = session["oauth_token"]
-    url = "https://webexapis.com/v1/rooms"
-    headers = {
-        "accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + accessToken,
-    }
-    response = requests.get(url=url, headers=headers)
-    return response
 
 
 if __name__ == "__main__":
