@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+
 from webbrowser import get
 import requests
 import json
